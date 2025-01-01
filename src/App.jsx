@@ -1,9 +1,8 @@
-import NavBar from "./components";
-import "./App.css";
+import NavBar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import Home from "./tabs/home";
-import Favourites from "./tabs/favourites";
-import Details from "./tabs/details";
+import Home from "./pages/Home";
+import Favourites from "./pages/Favourites";
+import Details from "./pages/Recipe";
 function App() {
   return (
     <div className="capitalize">

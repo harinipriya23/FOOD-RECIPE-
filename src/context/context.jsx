@@ -8,56 +8,53 @@ export default function GlobalStateContext({ children }) {
   const [recipeData, setRecipeData] = useState([]);
   const [recipeDetails, setRecipeDetails] = useState(null);
   const [favouritesList, setFavouritesList] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
     try {
       const url = `https://forkify-api.herokuapp.com/api/v2/recipes?search=${searchParams}`;
       const res = await fetch(url);
-      const data = await res.json();
-      console.log(data);
-      if (data?.data?.recipes) {
-        setRecipeData(data?.data?.recipes);
-        setLoading(false);
-        setSearchParams("");
-        console.log(recipeData);
-        navigate('/')
+      const database = await res.json();
+      console.log(database);
+      if (database?.data?.recipes) {
+        setRecipeData(database?.data?.recipes);
       }
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
       setSearchParams("");
+      navigate("/");
     }
   }
   function handleAddToFavourites(currentItem) {
-    console.log(currentItem);
-    let cpyFavouritesList = [...favouritesList]
-    const index = cpyFavouritesList.findIndex(item=> item.id === currentItem.id)
+    let cpyFavouritesList = [...favouritesList];
+    const index = cpyFavouritesList.findIndex(
+      (item) => item.id === currentItem.id
+    );
 
-    if(index === -1) {
-      cpyFavouritesList.push(currentItem)
+    if (index === -1) {
+      cpyFavouritesList.push(currentItem);
+    } else {
+      cpyFavouritesList.splice(index, 1);
     }
-    else{
-      cpyFavouritesList.splice(index)
-    }
-    setFavouritesList(cpyFavouritesList)
+    setFavouritesList(cpyFavouritesList);
   }
-  console.log(favouritesList)
-  
-  function handleClick (currentItem){
-    console.log(currentItem);
-    let cpyFavouritesList = [...favouritesList]
-    const index = cpyFavouritesList.findIndex(item=> item.id === currentItem.id)
+  console.log(favouritesList);
 
-    if(index === -1) {
-      cpyFavouritesList.push(currentItem)
+  function handleClick(currentItem) {
+    let cpyFavouritesList = [...favouritesList];
+    const index = cpyFavouritesList.findIndex(
+      (item) => item.id === currentItem.id
+    );
+
+    if (index === -1) {
+      cpyFavouritesList.push(currentItem);
+    } else {
+      cpyFavouritesList.splice(index);
     }
-    else{
-      cpyFavouritesList.splice(index)
-    }
-    setFavouritesList(cpyFavouritesList)
- 
+    setFavouritesList(cpyFavouritesList);
   }
 
   return (
@@ -73,7 +70,7 @@ export default function GlobalStateContext({ children }) {
         handleAddToFavourites,
         favouritesList,
         setFavouritesList,
-        handleClick
+        handleClick,
       }}
     >
       {children}

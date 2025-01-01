@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { GlobalContext } from "../../context/context";
-import RecipeItem from "../home/recipe-item";
+import { GlobalContext } from "../context/context";
+import RecipeItem from "./RecipeDetails";
 
 export default function Favourites () {
     const { favouritesList } = useContext(GlobalContext);

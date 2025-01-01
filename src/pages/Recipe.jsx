@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { GlobalContext } from "../../context/context";
+import { GlobalContext } from "../context/context";
 export default function Details() {
   const {
     recipeDetails,
@@ -16,7 +16,6 @@ export default function Details() {
         `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
       );
       const data = await response.json();
-      console.log(data);
       if (data && data.data) {
         setRecipeDetails(data.data);
       }
@@ -26,16 +25,17 @@ export default function Details() {
   }, []);
 
   return (
-    <div className=" container  w-3/4 m-auto mt-10 md:m-auto md:mt-10  grid grid-cols-1 lg:grid-cols-2 ">
-      <div className="">
-        <div className="w-auto h-full overflow-hidden  group">
+    <div className="my-10 mx-20 flex flex-col md:flex-row justify-center items-center 
+   border-2 border-white bg-slate-300 shadow-lg shadow-white py-10 gap-5">
+      <div className="md:mx-10">
           <img
             src={recipeDetails?.recipe?.image_url}
-            className=" rounded-xl shadow-2xl border-slate-300 border-2 w-full h-full group-hover:scale-105 duration-500"
+          className="w-96 h-96 md:h-56 hover:scale-105 duration-300
+           border-2 border-slate-200 shadow-xl mx-5
+         md:border-none "
           />
         </div>
-      </div>
-      <div className="flex flex-col md:m-4 p-3 font-prompt border-2 border-black">
+      <div className="flex flex-col px-10 font-prompt">
         <span className=" text-slate-600 font-medium text-lg ">
           {recipeDetails?.recipe?.publisher}
         </span>
@@ -62,9 +62,9 @@ export default function Details() {
           <span className="text-xl md:text-2xl font-semibold">ingredients</span>
           <ul className="gap-1">
             {recipeDetails?.recipe?.ingredients.map((ingredients) => (
-              <li className="">
+              <li key={ingredients.id}>
                 <span>
-                  {ingredients.quantity} {ingredients.unit}{" "}
+                  {ingredients.quantity} {ingredients.unit}
                 </span>
                 <span>{ingredients.description}</span>
               </li>
